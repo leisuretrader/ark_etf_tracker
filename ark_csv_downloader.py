@@ -12,7 +12,9 @@ ark_csv_urls ={
     "izrl":"https://ark-funds.com/wp-content/fundsiteliterature/csv/ARK_ISRAEL_INNOVATIVE_TECHNOLOGY_ETF_IZRL_HOLDINGS.csv"
 }
 
-data_dir = os.listdir("data/")
+path = "data/"
+
+data_dir = os.listdir(path)
 
 def ark_csv_download():
     file_date =""
@@ -33,14 +35,14 @@ def ark_csv_download():
                 # print ('File already exist')
                 pass
             else:  #if above check all passed, then download the file
-                with open('data/{}.csv'.format(urls.upper()), 'w') as f:
+                with open(path + "{}.csv".format(urls.upper()), 'w') as f:
                     f.write(read_csv)
     try:
-        path_name = "data/{}".format(file_date)
+        path_name = path + "{}".format(file_date)
         os.mkdir(path_name)
         files = [files.upper() + '.csv' for files in ark_csv_urls.keys()]
         for f in files:
-            shutil.move("data/{}".format(f), "data/{}".format(file_date))
+            shutil.move(path + "{}".format(f), path + "{}".format(file_date))
         print ('Downloaded For {}'.format(file_date))
 
     except FileExistsError as e:
@@ -48,7 +50,7 @@ def ark_csv_download():
 
 def check_if_missing_file():
     for i in data_dir:
-        daily_file = os.listdir("data/{}".format(i))
+        daily_file = os.listdir(path + "{}".format(i))
         if len(daily_file) < 7 :
             print ('missing file in folrder {}'.format(i))
         else:

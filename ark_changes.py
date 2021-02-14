@@ -6,14 +6,14 @@ us_time = pytz.timezone('US/Eastern')
 current_estern_time = datetime.datetime.now(us_time).date()
 
 data_dir = os.listdir("data/")
-ark_etfs = ['ARKK','ARKQ' ,'ARKW','ARKG','ARKF','PRNT','IZRL']
+ark_etfs = ['ARKK','ARKQ']
+#  ,'ARKW','ARKG','ARKF','PRNT','IZRL']
 
 # load the most recent 2 dates data from directory folder
 most_recent_dates = [data_dir[-1], data_dir[-2]]  #[current_date, previous_date]
 
 current_date = most_recent_dates[0]
 preivous_date = most_recent_dates[1]
-
 
 def csv_to_dict_by_dates(current_date, previous_date):
     holdings_by_dates = {}
@@ -37,14 +37,12 @@ def csv_to_dict_by_dates(current_date, previous_date):
 
 holdings_by_dates = csv_to_dict_by_dates(current_date, preivous_date)
 
-def ark_change_between_two_dates(current_date, previous_date):
+def ark_adding_removed_between_two_dates(current_date, previous_date):
     newly_added = []
     recent_removed =[]
 
     current_date_holding = holdings_by_dates.get(current_date)
-        # most_recent_dates[0])
     previous_date_holding = holdings_by_dates.get(previous_date)
-        # most_recent_dates[1])
 
     for fund, values in current_date_holding.items():
         current_stock_cusip_list = [[i[1], i[2]] for i in values]
@@ -81,4 +79,9 @@ def ark_change_between_two_dates(current_date, previous_date):
     print ("====================================================")
     print ("Recent Removed Stocks: ", "\n", "\n".join(map(str,recent_removed)))
 
-ark_change_between_two_dates(current_date, preivous_date)
+ark_adding_removed_between_two_dates(current_date, preivous_date)
+
+# print (holdings_by_dates.get('2021-02-12'))
+# company, ticker, cusip, shares, market value, weight
+
+# def ark_position_changes_between_two_dates(current_date, previous_date):  #track daily position change
