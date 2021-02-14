@@ -2,7 +2,6 @@ from urllib.request import Request, urlopen
 import csv, os, shutil
 import datetime
 
-# def ark_csvs_download():
 ark_csv_urls ={
     "arkk":"https://ark-funds.com/wp-content/fundsiteliterature/csv/ARK_INNOVATION_ETF_ARKK_HOLDINGS.csv",
     "arkq":"https://ark-funds.com/wp-content/fundsiteliterature/csv/ARK_AUTONOMOUS_TECHNOLOGY_&_ROBOTICS_ETF_ARKQ_HOLDINGS.csv",
@@ -13,9 +12,6 @@ ark_csv_urls ={
     "izrl":"https://ark-funds.com/wp-content/fundsiteliterature/csv/ARK_ISRAEL_INNOVATIVE_TECHNOLOGY_ETF_IZRL_HOLDINGS.csv"
 }
 
-# us_time = pytz.timezone('US/Eastern')
-# current_estern_time = datetime.datetime.now(us_time)
-# current_date = str(current_estern_time.date())
 data_dir = os.listdir("data/")
 
 def ark_csv_download():
@@ -34,7 +30,8 @@ def ark_csv_download():
             # rows = [row for row in rows if row.split(",")[0]=='date' or row.split(",")[0]==file_date_str]
 
             if file_date in data_dir:
-                print ('File already exist')
+                # print ('File already exist')
+                pass
             else:  #if above check all passed, then download the file
                 with open('data/{}.csv'.format(urls.upper()), 'w') as f:
                     f.write(read_csv)
@@ -44,10 +41,10 @@ def ark_csv_download():
         files = [files.upper() + '.csv' for files in ark_csv_urls.keys()]
         for f in files:
             shutil.move("data/{}".format(f), "data/{}".format(file_date))
-        print ('all files have downloaded')
+        print ('Downloaded For {}'.format(file_date))
 
     except FileExistsError as e:
-        print (e)
+        print ("All Files Have Already Downloaded Before")
 
 def check_if_missing_file():
     for i in data_dir:
