@@ -7,7 +7,10 @@ import matplotlib.pyplot as plt
 us_time = pytz.timezone('US/Eastern')
 current_estern_time = datetime.datetime.now(us_time).date()
 
-data_dir = os.listdir("data/")
+current_path = "data/"
+path = os.path.abspath(current_path)
+
+data_dir = os.listdir(path)
 ark_etfs = ['ARKK','ARKQ','ARKW','ARKG','ARKF','PRNT','IZRL']
 
 # load the most recent 2 dates data from directory folder
