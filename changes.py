@@ -3,12 +3,14 @@ import numpy as np
 import itertools
 import pandas as pd
 import matplotlib.pyplot as plt
+import pathlib
 
 us_time = pytz.timezone('US/Eastern')
 current_estern_time = datetime.datetime.now(us_time).date()
 
 current_path = "data/"
-path = os.path.abspath(current_path)
+pwd = pathlib.Path(__file__).parent.absolute()
+path = os.path.join(pwd, current_path)
 
 data_dir = os.listdir(path)
 ark_etfs = ['ARKK','ARKQ','ARKW','ARKG','ARKF','PRNT','IZRL']

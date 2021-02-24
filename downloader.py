@@ -1,6 +1,7 @@
 from urllib.request import Request, urlopen
 import csv, os, shutil
 import datetime
+import pathlib
 
 ark_csv_urls ={
     "arkk":"https://ark-funds.com/wp-content/fundsiteliterature/csv/ARK_INNOVATION_ETF_ARKK_HOLDINGS.csv",
@@ -13,8 +14,9 @@ ark_csv_urls ={
 }
 
 current_path = "data/"
+pwd = pathlib.Path(__file__).parent.absolute()
 
-path = os.path.abspath(current_path)
+path = os.path.join(pwd, current_path)
 
 data_dir = os.listdir(path)
 
@@ -37,14 +39,14 @@ def ark_csv_download():
                 # print ('File already exist')
                 pass
             else:  #if above check all passed, then download the file
-                with open(current_path + "{}.csv".format(urls.upper()), 'w') as f:
+                with open(path + "{}.csv".format(urls.upper()), 'w') as f:
                     f.write(read_csv)
     try:
-        path_name = current_path + "{}".format(file_date)
+        path_name = path + "{}".format(file_date)
         os.mkdir(path_name)
         files = [files.upper() + '.csv' for files in ark_csv_urls.keys()]
         for f in files:
-            shutil.move(current_path + "{}".format(f), current_path + "{}".format(file_date))
+            shutil.move(path + "{}".format(f), path + "{}".format(file_date))
         print ('Downloaded For {}'.format(file_date))
 
     except FileExistsError as e:
@@ -52,7 +54,7 @@ def ark_csv_download():
 
 def check_if_missing_file():
     for i in data_dir:
-        daily_file = os.listdir(current_path + "{}".format(i))
+        daily_file = os.listdir(path + "{}".format(i))
         if len(daily_file) < 7 :
             print ('missing file in folrder {}'.format(i))
         else:
