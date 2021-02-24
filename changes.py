@@ -13,20 +13,24 @@ pwd = pathlib.Path(__file__).parent.absolute()
 path = os.path.join(pwd, current_path)
 
 data_dir = os.listdir(path)
+data_dir.sort(key=lambda date: datetime.datetime.strptime(date, "%Y-%m-%d")) #sort dates
+
+print (data_dir)
 ark_etfs = ['ARKK','ARKQ','ARKW','ARKG','ARKF','PRNT','IZRL']
 
 # load the most recent 2 dates data from directory folder
 most_recent_dates = [data_dir[-1], data_dir[-2]]  #[current_date, previous_date]
-
+print (most_recent_dates)
 current_date = most_recent_dates[0]
 previous_date = most_recent_dates[1]
+print (current_date)
 
 def csv_to_dict_by_dates(current_date, previous_date):
     holdings_by_dates = {}
     for ark_date in most_recent_dates:
         current_cusip = {}
         for etf in ark_etfs:
-            with open("data/{}/{}.csv".format(ark_date, etf)) as f:
+            with open("{}{}/{}.csv".format(path,ark_date, etf)) as f:
                 reader = csv.reader(f)
                 next(reader)
                 row_list = []
@@ -82,7 +86,7 @@ def ark_adding_removed_between_two_dates(current_date, previous_date):
 
     # a = 'Comparing ARK holdings between {} and {}. Below are newly added and recent removed tickers \n'.format(previous_date,current_date)
 
-# print (ark_adding_removed_between_two_dates(current_date, previous_date))
+print (ark_adding_removed_between_two_dates(current_date, previous_date))
 
 # print (holdings_by_dates.get('2021-02-12'))
 # company, ticker, cusip, shares, market value, weight
