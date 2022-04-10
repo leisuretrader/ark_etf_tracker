@@ -16,7 +16,7 @@ data_dir = os.listdir(path)
 data_dir.sort(key=lambda date: datetime.datetime.strptime(date, "%Y-%m-%d")) #sort dates
 
 print (data_dir)
-ark_etfs = ['ARKK','ARKQ','ARKW','ARKG','ARKF','PRNT','IZRL']
+ark_etfs = ['ARKK','ARKQ','ARKW','ARKG','ARKF','PRNT','IZRL'] # all existing ARK ETFs on website.
 
 # load the most recent 2 dates data from directory folder
 most_recent_dates = [data_dir[-1], data_dir[-2]]  #[current_date, previous_date]
@@ -25,7 +25,7 @@ current_date = most_recent_dates[0]
 previous_date = most_recent_dates[1]
 print (current_date)
 
-def csv_to_dict_by_dates(current_date, previous_date):
+def csv_to_dict_by_dates(current_date, previous_date): 
     holdings_by_dates = {}
     for ark_date in most_recent_dates:
         current_cusip = {}
